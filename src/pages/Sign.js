@@ -14,6 +14,7 @@ import auth from '@react-native-firebase/auth';
 import { authStyle } from './styles';
 import { Input, Button } from '../components';
 import { useState } from 'react';
+import { validateNewInputs } from '../functions';
 
 const Sign = (props) => {
   // daha az state ile ?
@@ -21,15 +22,12 @@ const Sign = (props) => {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  function signIn () {
-    // gecerli eposta ve sifre kontrolu
-    if( password !== password2) {
-      Alert.alert("Clarus Chat", "Password do not match")
-    } else {
+  function signUp() {
+
+    if (validateNewInputs(email, password, password2)) {
       auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
-          alert("Sign Up Succesfull!");
           props.navigation.goBack();
         })
         .catch((err) => Alert.alert("Clarus Chat", "An error occured!"));
@@ -38,15 +36,16 @@ const Sign = (props) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#cfd8dc' }}>
+    <View style={{ flex: 1 }}>
+      <View style={authStyle.maincontainer}>
         <ScrollView contentContainerStyle={{ flex: 1 }}>
           <View style={authStyle.container}>
             <Image
               style={authStyle.logo}
-              source={require("../assets/logo.jpeg")}
+              source={require("../assets/logo.png")}
             />
-            <Text style={authStyle.logoText}>Clarus Chat</Text>
+            <Text style={authStyle.logoText}>roomy</Text>
+            <Text style={authStyle.logoDesc}>simply chat</Text>
           </View>
           <View style={{ flex: 1 }}>
 
@@ -55,29 +54,29 @@ const Sign = (props) => {
                 placeholder: "Type your e-mail address..",
                 keyboardType: "email-address"
               }}
-              onType = {(value)=> setEmail(value)}
+              onType={(value) => setEmail(value)}
             />
             <Input
               inputProps={{
                 placeholder: "Type your password..",
                 secureTextEntry: true
               }}
-              onType = {(value)=> setPassword(value)}
+              onType={(value) => setPassword(value)}
             />
             <Input
               inputProps={{
                 placeholder: "Type your password again..",
                 secureTextEntry: true
               }}
-              onType = {(value)=> setPassword2(value)}
+              onType={(value) => setPassword2(value)}
             />
-            <Button title="Create account" onPress={signIn}/>
-            <Button title="Cancel" noBorder onPress={()=>props.navigation.goBack()}/>
+            <Button title="Create account" onPress={signUp} />
+            <Button title="Cancel" noBorder onPress={() => props.navigation.goBack()} />
           </View>
 
         </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </View>
+    </View>
   );
 };
 

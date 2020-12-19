@@ -1,6 +1,10 @@
 import {StyleSheet, Dimensions} from 'react-native';
 
 export const authStyle = StyleSheet.create({
+  maincontainer: {
+    flex: 1, 
+    backgroundColor: '#fff'
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -11,9 +15,16 @@ export const authStyle = StyleSheet.create({
     resizeMode: 'contain',
   },
   logoText: {
-      color: 'purple',
-      fontSize: 35,
-      fontWeight: 'bold'
+      color: 'black',
+      fontSize: 55,
+      fontWeight: 'bold',
+      fontFamily: "notoserif"
+  },
+  logoDesc: {
+      color: 'black',
+      fontSize: 25,
+      fontStyle: "italic",
+      fontFamily: "Roboto"
   }
 });
 

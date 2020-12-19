@@ -15,25 +15,21 @@ import { authStyle } from './styles';
 import { Input, Button } from '../components';
 import auth from '@react-native-firebase/auth';
 import { useState } from 'react';
-import { resolveAuthError } from "../functions"
+import { resolveAuthError, validateInputs } from "../functions"
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   async function loginUser() {
-    try {
-      if (email === "" || password === "") {
-        Alert.alert("Clarus Chat", resolveAuthError("auth/null"));
-      } else {
+    if (validateInputs(email, password)) {
+      try {
         await auth().signInWithEmailAndPassword(email, password);
-        alert("Login Succesfull!");
-        props.navigation.navigate("Timeline");
+        // props.navigation.navigate("Timeline");
+      } catch (error) {
+        Alert.alert("Clarus Chat", resolveAuthError(error.code))
       }
-    } catch (error) {
-      Alert.alert("Clarus Chat", resolveAuthError(error.code))
     }
-
     // if (email === "" || password === "") {
     //   Alert.alert("Clarus Chat", resolveAuthError("auth/null"))
     // }
@@ -56,15 +52,16 @@ const Login = (props) => {
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#cfd8dc' }}>
+    <View style={{ flex: 1 }}>
+      <View style={authStyle.maincontainer}>
         <ScrollView contentContainerStyle={{ flex: 1 }}>
           <View style={authStyle.container}>
             <Image
               style={authStyle.logo}
-              source={require("../assets/logo.jpeg")}
+              source={require("../assets/logo.png")}
             />
-            <Text style={authStyle.logoText}>CLARUS CHAT</Text>
+            <Text style={authStyle.logoText}>roomy</Text>
+            <Text style={authStyle.logoDesc}>simply chat</Text>
           </View>
           <View style={{ flex: 1 }}>
             <Input
@@ -86,8 +83,8 @@ const Login = (props) => {
             <Button title="Sign Up" noBorder onPress={() => props.navigation.navigate("Sign")} />
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+      </View>
+    </View>
   );
 };
 

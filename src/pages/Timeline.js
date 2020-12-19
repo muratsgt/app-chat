@@ -11,45 +11,66 @@ import { useState } from 'react';
 const Timeline = () => {
   const user = auth().currentUser;
 
+  const [postList, setPostList] = useState([]);
   const [topicModalFlag, setTopicModalFlag] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState("");
 
+
   const selectTopic = (value) => {
+    database().ref(`/${selectedTopic}/`).off('value');
+
     setSelectedTopic(value);
     setTopicModalFlag(false);
 
     database()
-      .ref()
+      .ref(value)
       .on('value', (snapshot) => {
-        console.log(snapshot.val())
+        const data = snapshot.val();
+        if (data) {
+          const keyValues = Object.keys(data);
+          const formattedData = keyValues.map(key => ({ ...data[key] }))
+          formattedData.sort((a, b) => {
+            return new Date(b.time) - new Date(a.time);
+          });
+          setPostList(formattedData);
+        } else { setPostList([]) }
       })
-      // databasede guncelleme olunca fonksiyonu otomatik yeniler
+    // databasede guncelleme olunca fonksiyonu otomatik yeniler
   }
 
   const logOut = () => {
-
+    auth().signOut();
+    database().ref().off('value');
   }
 
   const sendPost = (value) => {
     const postObject = {
-      userMail : user.email,
-      postText : value,
-      time : moment().toISOString()
+      email: user.email,
+      postText: value,
+      time: moment().toISOString()
     }
     database().ref(selectedTopic + "/").push(postObject);
+  }
+
+  const renderPost = ({ item }) => <PostItem post={item} />
+
+  const onTopicModal = () => {
+    setTopicModalFlag(true);
   }
 
   return (
     <SafeAreaView style={timelinePage.container}>
       <View style={timelinePage.container}>
         <Header
-          onTopicModalSelect={() => setTopicModalFlag(true)}
+          onTopicModalSelect={onTopicModal}
           onLogOut={logOut}
           title={selectedTopic}
         />
         <FlatList
-          data={[]}
-          renderItem={() => null}
+          data={postList}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={renderPost}
+          ListEmptyComponent={() => null}
         />
         <PostInput onSendPost={sendPost} />
 

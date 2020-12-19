@@ -1,19 +1,29 @@
 import {StyleSheet, Dimensions} from 'react-native';
 
+const color1 = "#1976d2"; // blue
+const color2 = "#004ba0"; // dark blue
+const color3 = "#63a4ff"; // light blue
+
 export const input = StyleSheet.create({
   container: {
-    backgroundColor: '#eceff1',
+    backgroundColor: '#eee',
     margin: 10,
+    marginHorizontal:20,
     borderRadius: 5,
     paddingHorizontal: 10,
+    borderColor: "#ccc",
+    borderWidth: 1
   },
-  textInput: {},
+  textInput: {    
+    fontSize: 15,
+  },
 });
 
 export const button = StyleSheet.create({
   container: {
-    backgroundColor: 'purple',
+    backgroundColor: color1,
     margin: 10,
+    marginHorizontal:20,
     padding: 10,
     alignItems: 'center',
     borderRadius: 5,
@@ -21,19 +31,22 @@ export const button = StyleSheet.create({
   title: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 17,
   },
 });
 
 export const button_outline = StyleSheet.create({
   container: {
     margin: 10,
+    marginHorizontal:20,
     padding: 10,
     alignItems: 'center',
     borderRadius: 5,
   },
   title: {
-    color: 'purple',
-    fontWeight: 'bold',
+    color: color1,
+    fontWeight: 'bold',    
+    fontSize: 17,
   },
 });
 
@@ -44,7 +57,7 @@ export const postitem = StyleSheet.create({
   },
   headerContainer: {
     padding: 5,
-    backgroundColor: '#9c27b0',
+    backgroundColor: color2,
     justifyContent: 'space-between',
     flexDirection: 'row'
   },
@@ -88,7 +101,8 @@ export const header = StyleSheet.create({
       padding: 5,
       alignItems: 'center',
       borderBottomWidth: 1,
-      borderColor: '#90a4ae'
+      borderColor: '#90a4ae',
+      backgroundColor: "white"
    },  
    textContainer: {
       flex: 1

@@ -13,15 +13,15 @@ const Header = (props) => {
       <View style={{justifyContent: "center", flexDirection: "row"}}>
         <Icon 
           name = "hexagon-multiple"
-          size = {40}
-          color = "indigo"
+          size = {35}
+          color = "#1F97E7"
           onPress = {props.onTopicModalSelect}
           style = {{marginRight: 20}}
         />
         <Icon
           name = "login"
-          size = {40}
-          color = "indigo"
+          size = {35}
+          color = "#1F97E7"
           onPress = {props.onLogOut}
         />
       </View>
